@@ -63,7 +63,7 @@ def gen_data(mode):
 	if n_classes > 2:
 		y = np.eye(n_classes)[y]  # One-hot encode
 
-	x, y = torch.FloatTensor(x), torch.FloatTensor(y)
+	x, y = torch.tensor(x).float(), torch.tensor(y).float()
 
 	build_model()
 	plot_decision_boundary()
@@ -119,7 +119,7 @@ def plot_decision_boundary():
 	mesh_coords = np.column_stack((xx.flatten(), yy.flatten()))
 
 	# Make features
-	x_to_pred = torch.FloatTensor(mesh_coords)
+	x_to_pred = torch.tensor(mesh_coords).float()
 
 	# Make predictions
 	# (no need to use eval() or inference_mode() as model doesn't have dropout or batch norm)
@@ -144,13 +144,13 @@ def plot_decision_boundary():
 if __name__ == '__main__':
 	root = tk.Tk()
 	root.title('Neural net boundary visualiser')
-	root.config(width=350, height=240, background='#202029')
+	root.config(width=350, height=240, background='#101010')
 	root.resizable(False, False)
 
 	gen_data_lbl = tk.Label(root, text='1. Generate data',
-		font='consolas', background='#202029', foreground='white')
+		font='consolas', background='#101010', foreground='white')
 	train_model_lbl = tk.Label(root, text='2. Train model',
-		font='consolas', background='#202029', foreground='white')
+		font='consolas', background='#101010', foreground='white')
 
 	btn_clusters = tk.Button(root, text='Clusters', font='consolas', command=lambda: gen_data('clusters'))
 	btn_circles = tk.Button(root, text='Circles', font='consolas', command=lambda: gen_data('circles'))

@@ -21,7 +21,7 @@ pd.set_option('display.max_columns', 12)
 pd.set_option('display.width', None)
 
 
-def make_best_tree(x_train, y_train, x_test, y_test):
+def make_best_tree(x_train, y_train, x_test, y_test, use_gini=True):
 	"""Test different max_depth values, and return tree with the best one"""
 
 	best_tree = None
@@ -29,7 +29,7 @@ def make_best_tree(x_train, y_train, x_test, y_test):
 	max_depth = 0  # 0 max_depth means predicting all data points as the same value
 
 	while True:
-		tree = DecisionTree(x_train, y_train, max_depth)
+		tree = DecisionTree(x_train, y_train, max_depth, use_gini)
 		train_f1 = tree.evaluate(x_train, y_train)
 		test_f1 = tree.evaluate(x_test, y_test)
 		print(f'max_depth {max_depth}: training F1 score = {train_f1} | test F1 score = {test_f1}')
@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
 	x_train, y_train, x_test, y_test, labels, features = load_csv_classification_data(path, train_size=0.8, test_size=0.2)
 
-	tree = make_best_tree(x_train, y_train, x_test, y_test)
+	tree = make_best_tree(x_train, y_train, x_test, y_test, False)
 	print(f'\nOptimal tree depth: {tree.depth}')
 
 	plot_tree(tree, features, labels)
